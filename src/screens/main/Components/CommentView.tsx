@@ -6,6 +6,7 @@ import { pallets } from '@/constants'
 import { CommentIcon } from '@/assets/icons'
 import { Feather } from '@expo/vector-icons'
 import { getInitials } from '@/utils/formatter'
+import moment from 'moment'
 
 
 //THIS COMPONENT SHEET IS USED TO DIPLAY THE COMMENT ON THE SYSYTEM. IT'S BUILT WITH REACT NATIVE BOTTOM SHEET FOR SLLEK USER EXPERIENCE
@@ -39,23 +40,10 @@ type DropdownProps = {
 }
 
 export default function CommentView({
-    label,
     coverStyle,
-    error,
-    LeftComponent,
-    RightComponent,
     disabled,
-    style,
-    inputStyle,
-    value, labelStyle,
-    placeholder,
-    itemStyle,
     onFocus,
-    hasSearch,
-    altSearch,
-    setAltSearch,
-    altValue,
-    paginationOptions, item, onPressSend, isPostingComment
+    item, onPressSend, isPostingComment
 }: DropdownProps) {
     const drawer = useRef<RBSheet>(null)
     const [id, setId] = useState('')
@@ -107,7 +95,7 @@ export default function CommentView({
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, marginHorizontal: 10, marginTop: 3 }}>
                                         <View>
                                             <Text style={{ fontSize: 10 }}>{item?.commenter?.name}</Text>
-                                            <Text fontWeight='500' style={{ fontSize: 10 }}>April 15</Text>
+                                            {/* <Text fontWeight='500' style={{ fontSize: 10 }}>{ moment(item?.post?.).format('LT')}</Text> */}
 
                                         </View>
                                         <TouchableOpacity>

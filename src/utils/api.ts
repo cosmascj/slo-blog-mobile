@@ -1,6 +1,4 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import decode from 'jwt-decode';
-import { Alert } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 import { BASE_API_URL } from '@env';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -15,12 +13,8 @@ api.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
     const token = await EncryptedStorage.getItem('appToken');
     if (token) {
-      const expiry = token;
-      // const newd = token as LoginResponse
       const userJSON: LoginResponse = JSON.parse(token);
 
-      // const expiry = decode<UserTokenType>(token || '');
-      console.log('APP TOKEN USED HEREssss', userJSON.data?.token);
       if (!userJSON) {
         EncryptedStorage.removeItem('user');
         EncryptedStorage.removeItem('appToken');

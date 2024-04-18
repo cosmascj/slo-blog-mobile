@@ -18,7 +18,6 @@ export default function TabNavigator() {
                 headerShown: false,
                 tabBarIcon: ({ focused }) => {
                     const TabIcon = getTabIcon(route, focused);
-
                     return TabIcon;
                 },
             })}>

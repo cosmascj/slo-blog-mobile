@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native'
 import React, { useContext } from 'react'
 import { NavigationContainer, Theme } from '@react-navigation/native';
 import { pallets } from '@/constants';
@@ -39,12 +38,9 @@ export const LoadApp = () => {
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <NavigationContainer  {...{ theme }}>
                     {token ? <AppNavigator /> : <AuthNavigator />}
-                    {/* <AppNavigator /> */}
                 </NavigationContainer>
             </GestureHandlerRootView>
         </>
     )
 }
 
-
-const styles = StyleSheet.create({})

@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { pallets } from '@/constants'
 import { Input, Text } from '@/components'
 import { Feather } from '@expo/vector-icons'
+import moment from 'moment'
 
 
 interface props {
@@ -23,14 +24,14 @@ export default function BlogItem({ item, onPress }: props) {
                             style={styles.image} />
                         <View style={styles.body}>
                             <View style={styles.slug}>
-                                <Text fontWeight='400' style={styles.slugText}>Investment</Text>
+                                <Text fontWeight='400' style={styles.slugText}>{item?.category ?? 'none'}</Text>
                             </View>
                             <Text style={{ marginVertical: 5 }} fontWeight='600' >{item?.title ?? ''}</Text>
                             <Text fontWeight='500'>{item?.body.slice(0, 55)}...</Text>
 
                             <View style={styles.time}>
-                                <Text style={{ fontSize: 11 }} fontWeight='500'>🕓  April 10, 2024</Text>
-                                <Text style={{ fontSize: 11 }} fontWeight='500'>💬 Comments</Text>
+                                <Text style={{ fontSize: 11 }} fontWeight='500'>🕓  {moment(item?.created_on).format("LL")}</Text>
+                                <Text style={{ fontSize: 11 }} fontWeight='500'>💬 {item?.comments_count} Comments</Text>
                             </View>
                         </View>
 

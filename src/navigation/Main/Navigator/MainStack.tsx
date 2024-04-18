@@ -14,7 +14,6 @@ export default function HomeNavigator() {
             screenOptions={{
                 headerShown: false,
             }}>
-            <Screen name='DashboardHome' component={DashboardHome} />
             <Screen name='BlogDetails' component={BlogDetails} />
 
 

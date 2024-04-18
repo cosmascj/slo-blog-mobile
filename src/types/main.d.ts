@@ -6,6 +6,9 @@ interface PostItem {
   id: number;
   title: string;
   slug: string;
+  created_on: string;
+  category: string;
+  comments_count: number;
   body: string;
   media: string;
   creator: Creator;
@@ -27,6 +30,9 @@ interface PostDetailsData {
   slug: string;
   body: string;
   media: string;
+  created_on: string;
+  category: string;
+  comments_count: number;
   creator: Creator;
 }
 

@@ -17,7 +17,12 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
     })
     const [errors, setErrors] = useState<OTPErrors>({})
     const { mutate, isLoading } = useResetPassword({
-        onSuccess: () => { showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' }) },
+        onSuccess: () => {
+            showMessage({ message: 'Password Reset', type: 'success', icon: 'success' })
+            setTimeout(() => {
+                navigation.replace('Login')
+            }, 300)
+        },
         onError: (err: AxiosError<ApiError>) => { handleApiError(err) }
     })
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -42,6 +47,7 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
             handleError('Please enter your email', 'otp')
             isValid = false
         }
+
         if (inputs.password.length < 1) {
             handleError('Please enter your password', 'password')
             isValid = false
@@ -77,9 +83,11 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
                     onFocus={() => {
                         handleError(null, 'otp')
                     }}
+
                     error={errors.otp}
 
-                    label='OTP Code' coverStyle={{ marginTop: 10 }} />
+                    label='OTP Code'
+                    coverStyle={{ marginTop: 10 }} />
                 <Input
                     onChangeText={(text: string) => {
                         handleOnchange(text, 'password')
@@ -91,10 +99,10 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
                     label='New Password' />
                 <Input
                     onChangeText={(text: string) => {
-                        handleOnchange(text, 'password')
+                        handleOnchange(text, 'confirm_password')
                     }}
                     onFocus={() => {
-                        handleError(null, 'password')
+                        handleError(null, 'confirm_password')
                     }}
                     error={errors.confirm_password}
                     label='Confirm Password' secureTextEntry />

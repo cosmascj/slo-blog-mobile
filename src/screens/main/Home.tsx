@@ -13,9 +13,9 @@ const DashboardHome = ({ navigation }: RootNavigationProp<AppRoutes, TabRoutes, 
     const { user } = useContext(AuthContext) as AuthContextType
 
     const { data, isLoading } = useGetBlogs({})
-    console.log(user, 'kjlk')
+
     return (
-        <PageWrapper >
+        <PageWrapper>
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center', justifyContent: 'space-between', marginBottom: 19 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ backgroundColor: '#0056FD', borderRadius: 100, padding: 10 }}>
@@ -26,6 +26,7 @@ const DashboardHome = ({ navigation }: RootNavigationProp<AppRoutes, TabRoutes, 
 
                 <Ionicons name="notifications-outline" size={24} color="black" />
             </View>
+
             {isLoading ? <ActivityIndicator color={pallets.primaryBlue} /> :
 
                 <BlogItem item={data?.data} onPress={(val) => navigation.navigate('HomeStack', { screen: 'BlogDetails', params: { id: val } })} />
