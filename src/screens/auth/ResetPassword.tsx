@@ -15,7 +15,9 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
         otp: '',
         confirm_password: ''
     })
+
     const [errors, setErrors] = useState<OTPErrors>({})
+
     const { mutate, isLoading } = useResetPassword({
         onSuccess: () => {
             showMessage({ message: 'Password Reset', type: 'success', icon: 'success' })
@@ -34,9 +36,7 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
     const handleError = (error: string | null, input: keyof OTPErrors) => {
         setErrors((prevState) => ({ ...prevState, [input]: error }))
     }
-    const isValidEmail = (email: string) => {
-        return emailRegex.test(email);
-    };
+ 
 
     const validate = async () => {
         Keyboard.dismiss()
@@ -68,6 +68,7 @@ export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRo
         }
 
     }
+    
     return (
         <PageWrapper>
             <BackHeader />

@@ -13,29 +13,16 @@ import { pallets } from '@/constants'
 
 const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, 'VerifyAccount'>) => {
     const [otp, setOtp] = useState("");
-    const { token, user, setToken } = useContext(AuthContext) as AuthContextType
 
-    // const { email, setVerifiedStatus } = useSaveCredentials()
-    // const ref = useRef<SuccessModalHandle>(null)
-    // const [data, setData] = useState<responseToken>({ message: '', token: '', status: true, verification: { isDoctorOnboard: false, isOTPVerified: false, isPostGraduateDone: false } })
+  
     const check = route?.params.isPasswordReset ?? ''
 
-    // const { token } = useSaveCredentials()
     const { mutate, isLoading } = useVerifyAccount({
         onSuccess: ({ data }: { data: unknown }) => {
-            // setData(data)
-            // setVerifiedStatus(data?.verification)
-
-            // ref.current?.openModal()
+           
             showMessage({ type: 'success', icon: 'success', message: 'Verifcation successful!, Log in' })
-            // navigation.reset({ index: 0, routes: '' })
             setTimeout(() => {
                 navigation.replace('Login')
-
-                // navigation.reset({
-                //     index: 1,
-                //     routes: [{ name: 'Login' }],
-                // });
             }, 500)
         }, onError: (err: AxiosError<ApiError>) => {
             handleApiError(err)
@@ -117,7 +104,6 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
                             onPress={() => {
                                 if (check) {
                                     // ForgotPassword({ email: email ?? user?.email, code: otp })
-                                    console.log('kkld', check)
                                     Alert.alert('Something went wrong')
 
                                 } else {
@@ -142,17 +128,7 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
                     </View>
                 </ScrollView>
             </View>
-            {/* <ModelComp
-                btnText='Continue'
-                title='Your Account has been successfully registered!'
-                onPress={() => {
-                    ref.current?.closeModal()
-                    setTimeout(() => {
-                        // setToken('good')
-                        setToken(data?.token ?? '')
-                    }, 150)
-                }} ref={ref}
-            /> */}
+       
         </PageWrapper>
     )
 }

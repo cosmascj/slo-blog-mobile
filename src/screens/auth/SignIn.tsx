@@ -11,7 +11,7 @@ import { pallets } from '@/constants'
 import { AuthContext } from '@/context/AuthContext'
 
 export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>) => {
-    const { token, user, setToken } = useContext(AuthContext) as AuthContextType
+    const { setToken } = useContext(AuthContext) as AuthContextType
 
     const [inputs, setInputs] = useState<LoginProp>({
         email: '',
@@ -19,10 +19,10 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
         device_name: ''
     })
     const [errors, setErrors] = useState<LoginErrors>({})
+
     const { mutate, isLoading } = useLogin({
         onSuccess: ({ data }: { data: LoginResponse }) => {
             setToken(data)
-            // showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' })
         },
         onError: (err: AxiosError<ApiError>) => { handleApiError(err) }
     })
@@ -41,6 +41,7 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
     };
 
     //This function handles email validation
+
     const validate = async () => {
         Keyboard.dismiss()
         let isValid = true

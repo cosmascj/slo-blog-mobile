@@ -18,7 +18,6 @@ export const ForgotPassword = ({ navigation }: StackNavigationProps<AuthRoutes, 
     const { mutate, isLoading } = useInitatePasswordRecovery({
         onSuccess: () => {
             navigation.navigate('ResetPassword', { email: inputs.email })
-            // showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' })
         },
         onError: (err: AxiosError<ApiError>) => { handleApiError(err) }
     })

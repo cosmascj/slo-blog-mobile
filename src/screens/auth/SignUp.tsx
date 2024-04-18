@@ -28,6 +28,7 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
     })
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{8,}$/
+
     const handleOnchange = (text: string, input: keyof RegisterProp) => {
         setInputs((prevState) => ({ ...prevState, [input]: text }))
     }
@@ -79,6 +80,8 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
         }
 
     }
+
+
     return (
         <PageWrapper>
             <BackHeader />
@@ -120,7 +123,6 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
                     loading={isLoading}
                     text='Sign Up'
                     onPress={() => {
-                        // navigation.navigate('VerifyAccount', { email: inputs.email, isPasswordReset: false })
 
                         validate()
                     }}

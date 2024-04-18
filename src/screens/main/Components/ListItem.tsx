@@ -1,9 +1,6 @@
 import React, { ReactNode } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 
-
-import RightIcon from '../assets/icons/arrow-right-icon.svg';
-
 import { AntDesign } from '@expo/vector-icons';
 import { Text } from '@/components';
 import { pallets } from '@/constants';
