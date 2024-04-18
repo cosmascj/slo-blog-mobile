@@ -1,5 +1,5 @@
 interface AuthState {
-  user: UserTokenType;
+  user: LoginResponseData | null;
   token: string | null;
   onboarded: boolean;
   loading: boolean;
@@ -17,7 +17,7 @@ type UserTokenType = {
 } | null;
 
 type AuthAction =
-  | { type: 'SET_USER'; payload: UserTokenType }
+  | { type: 'SET_USER'; payload: LoginResponseData }
   | { type: 'SET_TOKEN'; payload: string }
   | { type: 'SET_ONBOARDED'; payload: boolean }
   | { type: 'SET_LOADING'; payload: boolean }
@@ -26,8 +26,8 @@ type AuthAction =
 interface AuthContextType extends AuthState {
   logout: () => void;
   setIsOnboarded: () => void;
-  setToken: (userToken: string) => void;
-  setUser: (userData: UserTokenType) => void;
+  setToken: (userToken: LoginResponse) => void;
+  setUser: (userData: LoginResponseData) => void;
   //   setUserType: (value: UserType) => void;
 }
 
@@ -47,6 +47,10 @@ interface LoginProp {
 interface VerifyAccountProp {
   email: string;
   token: string;
+}
+interface ResetPasswordProp {
+  email: string;
+  source: string;
 }
 
 interface ResetPasswordProps {

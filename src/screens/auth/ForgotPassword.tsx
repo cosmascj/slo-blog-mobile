@@ -6,13 +6,15 @@ import { AxiosError } from 'axios'
 import { handleApiError } from '@/utils/api'
 import { AuthRoutes, StackNavigationProps } from '@/navigation/types'
 import { useInitatePasswordRecovery } from '@/service/useAuth'
-import { pallets } from '@/constants'
 
 export const ForgotPassword = ({ navigation }: StackNavigationProps<AuthRoutes, 'ForgotPassword'>) => {
+
     const [inputs, setInputs] = useState<Pick<VerifyAccountProp, 'email'>>({
         email: '',
     })
+
     const [errors, setErrors] = useState<ForgotPasswordError>({})
+
     const { mutate, isLoading } = useInitatePasswordRecovery({
         onSuccess: () => {
             navigation.navigate('ResetPassword', { email: inputs.email })
@@ -53,6 +55,7 @@ export const ForgotPassword = ({ navigation }: StackNavigationProps<AuthRoutes, 
         if (isValid) {
             mutate({
                 email: inputs.email.toLowerCase(),
+                source: 'mobile'
             })
         }
 
@@ -60,12 +63,14 @@ export const ForgotPassword = ({ navigation }: StackNavigationProps<AuthRoutes, 
     return (
         <PageWrapper>
             <BackHeader />
+
             <ScrollView style={{ paddingHorizontal: 15 }}>
                 <Image style={{ marginBottom: 15, marginStart: 15 }} source={require('../../assets/images/password.png')} />
                 <Text fontWeight='600' style={{ fontSize: 24, marginStart: -5 }}> Forgot Password</Text>
                 <Text fontWeight='500' style={{ marginVertical: 7 }}> Enter your email address to reset your password</Text>
 
                 <Input
+                    autoCapitalize='none'
                     onChangeText={(text: string) => {
                         handleOnchange(text, 'email')
                     }}

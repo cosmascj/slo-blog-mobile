@@ -1,4 +1,5 @@
 import { HomeRoutes } from '@/navigation/types';
+import { BlogDetails } from '@/screens';
 import DashboardHome from '@/screens/main/Home';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -14,6 +15,7 @@ export default function HomeNavigator() {
                 headerShown: false,
             }}>
             <Screen name='DashboardHome' component={DashboardHome} />
+            <Screen name='BlogDetails' component={BlogDetails} />
 
 
         </Navigator>

@@ -20,11 +20,14 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
     })
     const [errors, setErrors] = useState<RegisterErrors>({})
     const { mutate, isLoading } = useRegister({
-        onSuccess: () => { showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' }) },
+        onSuccess: () => {
+            showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' })
+            navigation.navigate('VerifyAccount', { email: inputs.email, isPasswordReset: false })
+        },
         onError: (err: AxiosError<ApiError>) => { handleApiError(err) }
     })
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).{8,}$/
     const handleOnchange = (text: string, input: keyof RegisterProp) => {
         setInputs((prevState) => ({ ...prevState, [input]: text }))
     }
@@ -34,6 +37,9 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
     }
     const isValidEmail = (email: string) => {
         return emailRegex.test(email);
+    };
+    const isValidPassword = (email: string) => {
+        return passwordRegex.test(email);
     };
 
     const validate = async () => {
@@ -51,7 +57,11 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
             isValid = false
         }
         if (inputs.password.length < 1) {
-            handleError('Please enter your password', 'password')
+            handleError('Please enter your password, Min of 4', 'password')
+            isValid = false
+        }
+        if (!isValidPassword(inputs.password)) {
+            handleError('Password must be 1 uppercase, 1 symbol and 1 lowercase', 'password')
             isValid = false
         }
         if (!isValidEmail(inputs.email)) {
@@ -103,13 +113,17 @@ export const SignUp = ({ navigation }: StackNavigationProps<AuthRoutes, 'SignUp'
                     onFocus={() => {
                         handleError(null, 'password')
                     }}
-                    error={errors.email}
+                    error={errors.password}
                     label='Password' secureTextEntry />
 
                 <Button
                     loading={isLoading}
                     text='Sign Up'
-                    onPress={() => validate()}
+                    onPress={() => {
+                        // navigation.navigate('VerifyAccount', { email: inputs.email, isPasswordReset: false })
+
+                        validate()
+                    }}
                     style={{ marginTop: 20 }} />
 
                 <View style={styles.footerText}>

@@ -9,16 +9,8 @@ export const Home = ({ navigation }: StackNavigationProps<AuthRoutes, 'Onboardin
 
     const { setIsOnboarded } = useContext(AuthContext) as AuthContextType;
 
-    const [dotIndex, setIndex] = useState<number | null>(0);
 
-    const onViewableItemsChanged = useRef<ComponentProps<typeof FlatList>['onViewableItemsChanged']
-    >(({ viewableItems }) => {
-        if (viewableItems?.[0]) {
-            setIndex(viewableItems?.[0]?.index);
-        }
-    });
 
-    const viewabilityConfig = useRef({ itemVisiblePercentThreshold: 50 });
 
     const navigate = (screen: Extract<keyof AuthRoutes, 'Login' | 'Signup'>) => {
         setIsOnboarded();
@@ -27,13 +19,13 @@ export const Home = ({ navigation }: StackNavigationProps<AuthRoutes, 'Onboardin
     return (
         <>
             <View style={styles.container}>
-                <View style={{ height: 50 }} />
+                <View style={{ height: 60 }} />
                 <Image
                     style={{ width: '100%' }}
                     resizeMode='contain'
                     source={require('../../assets/images/onboardMain3.png')} />
 
-                <View style={{ alignItems: 'center', marginTop: '10%', marginHorizontal: 24 }}>
+                <View style={{ alignItems: 'center', marginTop: '10%', marginHorizontal: 15 }}>
 
                     <Text style={{ fontSize: 20 }} fontWeight='600'>Blog Reader</Text>
                     <Text fontWeight='500' style={{ textAlign: 'center', fontSize: 15 }}>Get to read the latest news, articles, stories in the financial sector.</Text>

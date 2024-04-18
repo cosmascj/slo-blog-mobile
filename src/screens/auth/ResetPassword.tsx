@@ -8,7 +8,7 @@ import { AxiosError } from 'axios'
 import { showMessage } from 'react-native-flash-message'
 import { useResetPassword } from '@/service/useAuth'
 
-export const ResetPassword = ({ navigation }: StackNavigationProps<AuthRoutes, 'ResetPassword'>) => {
+export const ResetPassword = ({ navigation, route }: StackNavigationProps<AuthRoutes, 'ResetPassword'>) => {
 
     const [inputs, setInputs] = useState<OTPProps>({
         password: '',
@@ -46,13 +46,18 @@ export const ResetPassword = ({ navigation }: StackNavigationProps<AuthRoutes, '
             handleError('Please enter your password', 'password')
             isValid = false
         }
+        if (inputs.password !== inputs.confirm_password) {
+            handleError('Please ensure that passwords match', 'confirm_password')
+            isValid = false
+        }
 
 
         if (isValid) {
             mutate({
-                email: inputs.em.toLowerCase(),
+                email: route?.params?.email,
+                token: inputs.otp,
                 password: inputs.password,
-                name: inputs.name, password_confirmation: inputs.password
+                password_confirmation: inputs.confirm_password
             })
         }
 
@@ -62,8 +67,8 @@ export const ResetPassword = ({ navigation }: StackNavigationProps<AuthRoutes, '
             <BackHeader />
 
             <ScrollView style={{ paddingHorizontal: 15 }}>
-                <Text fontWeight='600' style={{ fontSize: 24, marginStart: -5 }}> Sign Up</Text>
-                <Text fontWeight='500' style={{ marginVertical: 7, marginStart: -5 }}> Fill in your credentials below to get started 😎</Text>
+                <Text fontWeight='600' style={{ fontSize: 24, marginStart: -6 }}> Reset Password</Text>
+                <Text fontWeight='500' style={{ marginVertical: 7, marginStart: -2 }}> Enter the OTP Code sent to your mail and your new password</Text>
 
                 <Input
                     onChangeText={(text: string) => {
@@ -97,7 +102,7 @@ export const ResetPassword = ({ navigation }: StackNavigationProps<AuthRoutes, '
                 <Button
                     loading={isLoading}
                     text='Reset Password'
-                    // onPress={() => validate()}
+                    onPress={() => validate()}
                     style={{ marginTop: 20 }} />
 
 

@@ -12,6 +12,7 @@ export default function AppNavigator() {
                 headerShown: false,
             }}>
             <Screen name='TabStack' component={TabStack} />
+            <Screen name='HomeStack' component={HomeStack} />
 
 
         </Navigator>)

@@ -21,3 +21,15 @@ interface OTPErrors {
   password?: string | null;
   confirm_password?: string | null;
 }
+interface LoginResponse {
+  message: string;
+  data: LoginResponseData;
+}
+
+interface LoginResponseData {
+  token: string;
+  name: string;
+  email: string;
+  'expiration_time (hrs)': number;
+  user_type: string;
+}

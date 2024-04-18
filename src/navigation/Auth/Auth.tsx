@@ -3,6 +3,7 @@ import { AuthRoutes } from '../types';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ForgotPassword, Home, ResetPassword, SignIn, SignUp } from '@/screens';
 import { AuthContext } from '@/context/AuthContext';
+import VerifyAccount from '@/screens/auth/VerifyAccount';
 
 const { Group, Navigator, Screen } = createNativeStackNavigator<AuthRoutes>();
 
@@ -23,6 +24,7 @@ export default function AuthNavigator() {
                 <Screen name="SignUp" component={SignUp} />
                 <Screen name='ForgotPassword' component={ForgotPassword} />
                 <Screen name='ResetPassword' component={ResetPassword} />
+                <Screen name='VerifyAccount' component={VerifyAccount} />
 
 
             </Group>

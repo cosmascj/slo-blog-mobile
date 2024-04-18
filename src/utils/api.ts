@@ -15,15 +15,18 @@ api.interceptors.request.use(
   async (config: AxiosRequestConfig) => {
     const token = await EncryptedStorage.getItem('appToken');
     if (token) {
-      const token2 = JSON.parse(token);
-      const expiry = decode<UserTokenType>(token || '');
+      const expiry = token;
+      // const newd = token as LoginResponse
+      const userJSON: LoginResponse = JSON.parse(token);
 
-      if (new Date() >= new Date((expiry?.exp || 0) * 1000)) {
+      // const expiry = decode<UserTokenType>(token || '');
+      console.log('APP TOKEN USED HEREssss', userJSON.data?.token);
+      if (!userJSON) {
         EncryptedStorage.removeItem('user');
         EncryptedStorage.removeItem('appToken');
       } else {
         if (config.headers) {
-          config.headers.Authorization = `Bearer ${token2}`;
+          config.headers.Authorization = `Bearer ${userJSON.data?.token}`;
         } else {
           console.log(config);
         }

@@ -12,3 +12,4 @@ export * from './auth/ResetPassword';
 export * from './main/Home';
 export * from './main/Profile';
 export * from './main/Category';
+export * from './main/BlogDetails';

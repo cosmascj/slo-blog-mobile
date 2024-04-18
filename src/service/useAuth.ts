@@ -15,16 +15,21 @@ export const useVerifyAccount = (options: ApiOptions) =>
     ...options,
   });
 
-export const useInitatePasswordRecovery = (options: ApiOptions) =>
+export const useResendOtp = (options: ApiOptions) =>
   useMutation(
     async (data: Pick<VerifyAccountProp, 'email'>) =>
-      await api.post('resetpassword', data),
+      await api.post('resendVerificationMail', data),
     {
       ...options,
     },
   );
 
+export const useInitatePasswordRecovery = (options: ApiOptions) =>
+  useMutation(async (data: ResetPasswordProp) => await api.post('resetpassword', data), {
+    ...options,
+  });
+
 export const useResetPassword = (options: ApiOptions) =>
-  useMutation(async (data: ResetPasswordProps) => await api.post('resetpassword', data), {
+  useMutation(async (data: ResetPasswordProps) => await api.post('verify', data), {
     ...options,
   });

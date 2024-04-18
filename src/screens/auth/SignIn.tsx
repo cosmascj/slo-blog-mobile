@@ -1,5 +1,5 @@
 import { Keyboard, ScrollView, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { BackHeader, Button, Input, PageWrapper, Text } from '@/components'
 import { useLogin } from '@/service/useAuth'
 import { showMessage } from 'react-native-flash-message'
@@ -8,8 +8,10 @@ import { ApiError } from '@/types/global'
 import { AxiosError } from 'axios'
 import { AuthRoutes, StackNavigationProps } from '@/navigation/types'
 import { pallets } from '@/constants'
+import { AuthContext } from '@/context/AuthContext'
 
 export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>) => {
+    const { token, user, setToken } = useContext(AuthContext) as AuthContextType
 
     const [inputs, setInputs] = useState<LoginProp>({
         email: '',
@@ -18,7 +20,8 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
     })
     const [errors, setErrors] = useState<LoginErrors>({})
     const { mutate, isLoading } = useLogin({
-        onSuccess: () => {
+        onSuccess: ({ data }: { data: LoginResponse }) => {
+            setToken(data)
             // showMessage({ message: 'Regosteration successful', type: 'success', icon: 'success' })
         },
         onError: (err: AxiosError<ApiError>) => { handleApiError(err) }
@@ -37,7 +40,7 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
         return emailRegex.test(email);
     };
 
-
+    //This function handles email validation
     const validate = async () => {
         Keyboard.dismiss()
         let isValid = true
@@ -47,7 +50,7 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
             handleError('Please enter your email', 'email')
             isValid = false
         }
-        if (inputs.password.length < 1) {
+        if (inputs.password.length < 3) {
             handleError('Please enter your password', 'password')
             isValid = false
         }
@@ -76,6 +79,7 @@ export const SignIn = ({ navigation }: StackNavigationProps<AuthRoutes, 'Login'>
                     onChangeText={(text: string) => {
                         handleOnchange(text, 'email')
                     }}
+                    autoCapitalize='none'
                     onFocus={() => {
                         handleError(null, 'email')
                     }}

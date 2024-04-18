@@ -6,6 +6,7 @@ export type AppRoutes = {
 };
 export type HomeRoutes = {
   DashboardHome: undefined;
+  BlogDetails: { id: number };
 };
 
 export type AuthRoutes = {
@@ -14,6 +15,7 @@ export type AuthRoutes = {
   SignUp: undefined;
   ForgotPassword: undefined;
   ResetPassword: { email: string };
+  VerifyAccount: { email: string; isPasswordReset: boolean };
 };
 export type TabRoutes = {
   Home: undefined;

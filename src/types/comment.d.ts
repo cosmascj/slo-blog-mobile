@@ -1,8 +1,15 @@
-interface PostResponse {
-  data: PostItem[];
+interface CommentResponse {
+  data: CommentResponseDaum[];
 }
 
-interface PostItem {
+interface CommentResponseDaum {
+  id: number;
+  comment: string;
+  post: Post;
+  commenter: Commenter;
+}
+
+interface Post {
   id: number;
   title: string;
   slug: string;
@@ -16,21 +23,11 @@ interface Creator {
   name: string;
   email: string;
   user_type: string;
-}
-interface PostDetails {
-  data: PostDetailsData;
-}
-
-interface PostDetailsData {
-  id: number;
-  title: string;
-  slug: string;
-  body: string;
-  media: string;
-  creator: Creator;
+  status: string;
+  joined_on: string;
 }
 
-interface Creator {
+interface Commenter {
   id: number;
   name: string;
   email: string;

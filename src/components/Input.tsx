@@ -24,13 +24,14 @@ type InputProps = TextInputProps & {
     errorMessage?: string;
     error?: string | null
     ref?: LegacyRef<TextInput>
+    onPressRight?: () => void
 }
 
 
 export const Input = forwardRef<TextInput, InputProps>(
     (
         {
-            RightComponent,
+            RightComponent, onPressRight,
             LeftComponent,
             label,
             error,
@@ -80,7 +81,11 @@ export const Input = forwardRef<TextInput, InputProps>(
                             />
                         </TouchableOpacity>
                     ) : (
-                        RightComponent && RightComponent
+                        <>
+                            <TouchableOpacity onPress={() => onPressRight?.()}>
+                                {RightComponent && RightComponent}
+                            </TouchableOpacity>
+                        </>
                     )}
                 </View>
                 {error && (

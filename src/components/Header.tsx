@@ -5,6 +5,7 @@ import Icon from '@expo/vector-icons/MaterialIcons'
 
 import { Text } from "./Text"
 import { pallets } from "@/constants"
+import { showMessage } from "react-native-flash-message"
 type BackHeaderProps = {
     showBack?: boolean
     title?: string;
@@ -22,13 +23,20 @@ export const BackHeader = ({
     onPressBack, padding = 20, showBack = true, title, subtitle, showContent = true, leftComponent, onPressLeft, showLeftComponent
 
 }: BackHeaderProps) => {
+    const goback = () => {
+        try {
+            navigation.goBack()
+        } catch (error) {
+            showMessage({ message: "Can't go back now " })
+        }
+    }
     const navigation = useNavigation()
     return (
         <View style={[styles.container, styles.backContainer, { paddingBottom: padding }]}>
             {showBack
                 ? (
                     <TouchableOpacity style={styles.icon} onPress={() => {
-                        onPressBack ? onPressBack?.() : navigation.goBack()
+                        onPressBack ? onPressBack?.() : goback()
                     }
                     }>
                         <Icon name="arrow-back" size={24} color={pallets.primaryBlue} />

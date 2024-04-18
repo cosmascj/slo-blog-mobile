@@ -49,6 +49,7 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
         queryCache.clear();
         dispatch({ type: 'LOGOUT' });
         void EncryptedStorage.removeItem('appToken')
+        void EncryptedStorage.removeItem('user')
 
     };
     const setIsOnboarded = () => {
@@ -67,20 +68,40 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
         });
     };
 
-    const setUser = async (userData: UserTokenType) => {
+    const setUser = async (userData: LoginResponseData) => {
         dispatch({
             payload: userData,
             type: 'SET_USER',
         });
         EncryptedStorage.setItem('user', JSON.stringify(userData));
-        // SecureStore.setItemAsync('user', JSON.stringify(userData));
 
-        // console.log('🚀 ~ file: AuthContext.tsx:009 ~ setToken ~ decoded:', userData);
 
     };
 
-    const setToken = (userToken: string) => { }
+    // const setToken = (userToken: string) => { }
+    const setToken = (userToken: LoginResponse) => {
+        try {
+            // const decoded = jwtDecode(userToken || '') as UserTokenType;
+            console.log('🚀 ~ file: AuthContext.tsx:s89 ~ setToken ~ decoded:', userToken);
 
+            setUser(userToken.data);
+
+            dispatch({
+                payload: userToken.data?.token,
+                type: 'SET_TOKEN',
+            });
+            // AsyncStorage.setItem('token2', JSON.stringify(userToken));
+            void EncryptedStorage.setItem('appToken', JSON.stringify(userToken))
+
+        } catch (error) {
+            console.warn(error, 'SAVE FAILED');
+            EncryptedStorage.removeItem('appToken');
+            dispatch({
+                payload: '',
+                type: 'SET_TOKEN',
+            });
+        }
+    };
     const getUserData = async () => {
 
         try {
@@ -94,15 +115,29 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
             }
 
             const userData = await EncryptedStorage.getItem('user');
-            // if (userData) {
-            //     const userJSON: UserTokenType = JSON.parse(userData);
 
-            //     const expiry = new Date(0);
+            if (userData) {
+                const userJSON: LoginResponseData = JSON.parse(userData);
 
-            //     expiry.setUTCSeconds(userJSON?.exp || 0);
-            //     console.log('EXPIRY', expiry);
+                const expiry = new Date(0);
 
-            // }
+                // expiry.setUTCSeconds(userJSON?.exp || 0);
+                // console.log('EXPIRY', expiry);
+
+                if (userJSON) {
+                    setUser(userJSON)
+
+                    const userToken = await EncryptedStorage.getItem('appToken');
+                    const test = JSON.parse(userToken || '')
+                    if (userToken) {
+
+                        setToken(test);
+                        console.log('🚀 ~ file: AuthContext.tsx:899 ~ getUser data ~ decoded:', JSON.parse(userToken));
+                    }
+                } else {
+                    throw new Error('USER VERIFICATION FAILED');
+                }
+            }
             setLoading(false)
             console.log('here is loader')
         } catch (error) {

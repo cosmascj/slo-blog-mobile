@@ -38,8 +38,8 @@ export const LoadApp = () => {
         <>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <NavigationContainer  {...{ theme }}>
-                    {/* {token ? <AppNavigator /> : <AuthNavigator />} */}
-                    <AppNavigator />
+                    {token ? <AppNavigator /> : <AuthNavigator />}
+                    {/* <AppNavigator /> */}
                 </NavigationContainer>
             </GestureHandlerRootView>
         </>
