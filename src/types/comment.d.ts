@@ -7,6 +7,7 @@ interface CommentResponseDaum {
   comment: string;
   post: Post;
   commenter: Commenter;
+  created_on: string;
 }
 
 interface Post {

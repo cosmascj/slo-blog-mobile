@@ -26,9 +26,9 @@ export const Profile = ({ navigation }: RootNavigationProp<AppRoutes, TabRoutes,
                     <View>
                         <View style={{ alignItems: 'center', }}>
                             <Image source={require('../../assets/images/placeholder.png')} style={{ width: 80, height: 80, borderRadius: 50, backgroundColor: 'gray' }} />
-                            <Text style={{ fontSize: 11 }}>{user?.name}</Text>
+                            <Text fontWeight='400' style={{ fontSize: 16 }}>{user?.name}</Text>
                             <View style={{ backgroundColor: pallets.lightRed, paddingHorizontal: 10, borderRadius: 10, padding: 4 }}>
-                                {/* <Text>ID: {data?.profile?.userId} </Text> */}
+
                             </View>
 
                         </View>

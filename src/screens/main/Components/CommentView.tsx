@@ -7,9 +7,11 @@ import { CommentIcon } from '@/assets/icons'
 import { Feather } from '@expo/vector-icons'
 import { getInitials } from '@/utils/formatter'
 import moment from 'moment'
+import { RF } from '@/utils'
 
 
 //THIS COMPONENT SHEET IS USED TO DIPLAY THE COMMENT ON THE SYSYTEM. IT'S BUILT WITH REACT NATIVE BOTTOM SHEET FOR SLLEK USER EXPERIENCE
+
 type DropdownProps = {
     coverStyle?: ViewStyle
     inputStyle?: ViewStyle & TextStyle
@@ -94,8 +96,8 @@ export default function CommentView({
                                     </View>
                                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1, marginHorizontal: 10, marginTop: 3 }}>
                                         <View>
-                                            <Text style={{ fontSize: 10 }}>{item?.commenter?.name}</Text>
-                                            {/* <Text fontWeight='500' style={{ fontSize: 10 }}>{ moment(item?.post?.).format('LT')}</Text> */}
+                                            <Text style={{ fontSize: RF(9) }}>{item?.commenter?.name}</Text>
+                                            <Text fontWeight='500' style={{ fontSize: 10 }}>{moment(item?.created_on).fromNow()}</Text>
 
                                         </View>
                                         <TouchableOpacity>

@@ -14,12 +14,12 @@ import { pallets } from '@/constants'
 const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, 'VerifyAccount'>) => {
     const [otp, setOtp] = useState("");
 
-  
+
     const check = route?.params.isPasswordReset ?? ''
 
     const { mutate, isLoading } = useVerifyAccount({
         onSuccess: ({ data }: { data: unknown }) => {
-           
+
             showMessage({ type: 'success', icon: 'success', message: 'Verifcation successful!, Log in' })
             setTimeout(() => {
                 navigation.replace('Login')
@@ -107,8 +107,7 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
                                     Alert.alert('Something went wrong')
 
                                 } else {
-                                    mutate({ token: 'HfiVhB', email: route?.params?.email.toLowerCase() })
-                                    console.log('kkld', { token: otp, email: route?.params?.email.toLowerCase() })
+                                    mutate({ token: otp, email: route?.params?.email.toLowerCase() })
                                 }
                             }}
                         />
@@ -128,7 +127,7 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
                     </View>
                 </ScrollView>
             </View>
-       
+
         </PageWrapper>
     )
 }

@@ -9,9 +9,11 @@ const { Group, Navigator, Screen } = createNativeStackNavigator<AuthRoutes>();
 
 export default function AuthNavigator() {
     const { onboarded } = useContext(AuthContext) as AuthContextType
-    console.log(onboarded, 'onboarder')
+
     return (
         <Navigator screenOptions={{ headerShown: false, gestureEnabled: true }}>
+            {/* The screen below is for first time only */}
+
             {!onboarded && (
                 <Group>
                     <Screen name="Onboarding" component={Home} />
