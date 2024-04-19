@@ -6,7 +6,6 @@ import { ApiError } from '@/types/global'
 import { handleApiError } from '@/utils/api'
 import { AxiosError } from 'axios'
 import { showMessage } from 'react-native-flash-message'
-import { AuthContext } from '@/context/AuthContext'
 import { AuthRoutes, StackNavigationProps } from '@/navigation/types'
 import { useResendOtp, useVerifyAccount } from '@/service/useAuth'
 import { pallets } from '@/constants'
@@ -45,23 +44,7 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
 
         return () => clearInterval(interval);
     }, [timer]);
-    // const { mutate: ForgotPassword, isLoading: isLoadingForgotPassword } = useVerifyForgotPasswordOTP({
-    //     onSuccess: ({ data }: { data: unknown }) => {
-    //         console.log(data, 'forjkl')
-    //         showMessage({
-    //             type: 'info',
-    //             message: 'Token verified Successfully',
-    //             icon: 'info',
-    //             statusBarHeight: 40
-    //         })
-    //         setTimeout(() => {
-    //             navigation.navigate('ResetPassword', {email : route?.params?.email})
-    //         }, 200)
-    //     }, onError: (err: AxiosError<ApiError>) => {
-    //         handleApiError(err)
-    //         console.log(err, 'ERROR')
-    //     }
-    // })
+
     const { mutate: ResendOtp } = useResendOtp({
         onSuccess: () => {
             showMessage({
@@ -103,7 +86,6 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
                             style={{ marginTop: 20 }}
                             onPress={() => {
                                 if (check) {
-                                    // ForgotPassword({ email: email ?? user?.email, code: otp })
                                     Alert.alert('Something went wrong')
 
                                 } else {
@@ -135,6 +117,11 @@ const VerifyAccount = ({ navigation, route }: StackNavigationProps<AuthRoutes, '
 export default VerifyAccount
 
 const styles = StyleSheet.create({
-    body: { color: '#2B2B2B', fontSize: 16, textAlign: 'center', fontFamily: 'Gotham-Light', lineHeight: 24 }
+    body: {
+        color: '#2B2B2B',
+        fontSize: 16,
+        textAlign: 'center',
+        lineHeight: 24
+    }
 
 })
