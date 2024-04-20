@@ -54,7 +54,8 @@ export const BlogDetails = ({ navigation, route }: StackNavigationProps<HomeRout
                     <View style={styles.comment}>
                         <CommentView
                             isPostingComment={loadingPostComment}
-                            onPressSend={(val) => mutate({ comment: val })}
+                            postId={route?.params?.id}
+                            // onPressSend={(val) => mutate({ comment: val })}
                             item={Comment?.data ?? []} />
                     </View>
                 </>

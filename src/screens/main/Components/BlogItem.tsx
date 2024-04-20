@@ -4,6 +4,7 @@ import { pallets } from '@/constants'
 import { Input, Text } from '@/components'
 import { Feather } from '@expo/vector-icons'
 import moment from 'moment'
+import { RF } from '@/utils'
 
 
 interface props {
@@ -31,7 +32,7 @@ export default function BlogItem({ item, onPress }: props) {
 
                             <View style={styles.time}>
                                 <Text style={{ fontSize: 11 }} fontWeight='500'>🕓  {moment(item?.created_on).format("LL")}</Text>
-                                <Text style={{ fontSize: 11 }} fontWeight='500'>💬 {item?.comments_count} Comments</Text>
+                                <Text style={{ fontSize: RF(8) }} fontWeight='500'>💬 {item?.comments_count} Comments</Text>
                             </View>
                         </View>
 

@@ -1,5 +1,5 @@
 import { ActivityIndicator, Dimensions, FlatList, StyleSheet, TextInput, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native'
-import React, { ReactNode, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import { Input, Text } from '@/components'
 import { pallets } from '@/constants'
@@ -8,6 +8,12 @@ import { Feather } from '@expo/vector-icons'
 import { getInitials } from '@/utils/formatter'
 import moment from 'moment'
 import { RF } from '@/utils'
+import { usePostBlogComment } from '@/service/useBlog'
+import { useQueryClient } from '@tanstack/react-query'
+import { showMessage } from 'react-native-flash-message'
+import { AxiosError } from 'axios'
+import { ApiError } from '@/types/global'
+import { handleApiError } from '@/utils/api'
 
 
 //THIS COMPONENT SHEET IS USED TO DIPLAY THE COMMENT ON THE SYSYTEM. IT'S BUILT WITH REACT NATIVE BOTTOM SHEET FOR SLLEK USER EXPERIENCE
@@ -39,16 +45,32 @@ type DropdownProps = {
         fetchNextPage?: () => void;
     };
     isPostingComment?: boolean
+    postId: number
+    clearComments: () => void
 }
 
 export default function CommentView({
     coverStyle,
     disabled,
     onFocus,
-    item, onPressSend, isPostingComment
+    item, onPressSend, isPostingComment, postId, clearComments
 }: DropdownProps) {
     const drawer = useRef<RBSheet>(null)
     const [id, setId] = useState('')
+    const query = useQueryClient()
+    const { mutate, isLoading: loadingPostComment, isSuccess } = usePostBlogComment(postId, {
+        onSuccess: () => {
+            query.invalidateQueries(['getBlogComment'])
+            query.invalidateQueries(['getBlogDetail'])
+            setId('')
+            showMessage({ message: 'Comment added', type: 'success', icon: 'success' })
+        },
+        onError: (err: AxiosError<ApiError>) => {
+            console.log(err.config?.data, 'diooo')
+            handleApiError(err)
+        }
+    })
+
     return (
         <>
             <TouchableOpacity
@@ -120,10 +142,15 @@ export default function CommentView({
                         )
                     }}
                 />
+
                 <Input
+                    value={id}
                     onChangeText={(val) => setId(val)}
-                    onPressRight={() => onPressSend?.(id)}
-                    RightComponent={!isPostingComment ? <Feather name="send" size={24} color="black" /> : <ActivityIndicator color={pallets.primaryBlue} />}
+                    onPressRight={() => {
+                        mutate({ comment: id })
+                    }}
+                    // onPressRight={() => onPressSend?.(id)}
+                    RightComponent={!loadingPostComment ? <Feather name="send" size={24} color="black" /> : <ActivityIndicator color={pallets.primaryBlue} />}
                     placeholder='Add comments here...' />
 
 

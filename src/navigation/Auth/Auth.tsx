@@ -20,15 +20,11 @@ export default function AuthNavigator() {
                 </Group>
             )}
             <Group>
-
-
                 <Screen name="Login" component={SignIn} />
                 <Screen name="SignUp" component={SignUp} />
                 <Screen name='ForgotPassword' component={ForgotPassword} />
                 <Screen name='ResetPassword' component={ResetPassword} />
                 <Screen name='VerifyAccount' component={VerifyAccount} />
-
-
             </Group>
         </Navigator>
     );

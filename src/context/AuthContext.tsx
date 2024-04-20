@@ -1,5 +1,5 @@
-import { QueryCache, useQueryClient } from '@tanstack/react-query';
-import React, { createContext, useEffect, useReducer, useState } from 'react';
+import { QueryCache } from '@tanstack/react-query';
+import React, { createContext, useEffect, useReducer } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -42,7 +42,6 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
 
     const [state, dispatch] = useReducer(authReducer, initialState);
     const queryCache = new QueryCache({});
-    const queryClient = useQueryClient()
 
     const logout = () => {
 
@@ -58,7 +57,6 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
             type: 'SET_ONBOARDED',
         });
         EncryptedStorage.setItem('isOnboarded', 'true');
-        // SecureStore.setItemAsync('isOnboarded', 'true');
     };
 
     const setLoading = (loading: boolean) => {
@@ -78,10 +76,8 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
 
     };
 
-    // const setToken = (userToken: string) => { }
     const setToken = (userToken: LoginResponse) => {
         try {
-            // const decoded = jwtDecode(userToken || '') as UserTokenType;
             console.log('🚀 ~ file: AuthContext.tsx:s89 ~ setToken ~ decoded:', userToken);
 
             setUser(userToken.data);
@@ -90,7 +86,6 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
                 payload: userToken.data?.token,
                 type: 'SET_TOKEN',
             });
-            // AsyncStorage.setItem('token2', JSON.stringify(userToken));
             void EncryptedStorage.setItem('appToken', JSON.stringify(userToken))
 
         } catch (error) {
@@ -119,10 +114,6 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
             if (userData) {
                 const userJSON: LoginResponseData = JSON.parse(userData);
 
-                const expiry = new Date(0);
-
-                // expiry.setUTCSeconds(userJSON?.exp || 0);
-                // console.log('EXPIRY', expiry);
 
                 if (userJSON) {
                     setUser(userJSON)
@@ -152,7 +143,6 @@ const AuthContextProvider = ({ children }: Props): JSX.Element => {
 
     useEffect(() => {
         getUserData();
-        // logout()
     }, []);
 
     const authState: AuthContextType = {
