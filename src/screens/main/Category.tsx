@@ -7,6 +7,7 @@ export const Category = () => {
         <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <Text>Category</Text>
             <Text>Coming Soon!</Text>
+
         </View>
     )
 }

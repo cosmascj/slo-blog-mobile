@@ -1,4 +1,4 @@
-import { Dimensions, FlatList, Image, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native'
+import { Dimensions, FlatList, Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native'
 import React, { ComponentProps, useContext, useRef, useState } from 'react'
 import { AuthContext } from '@/context/AuthContext';
 import { AuthRoutes, StackNavigationProps } from '@/navigation/types';
@@ -9,35 +9,40 @@ export const Home = ({ navigation }: StackNavigationProps<AuthRoutes, 'Onboardin
 
     const { setIsOnboarded } = useContext(AuthContext) as AuthContextType;
 
-
-
+    const { setToken } = useContext(AuthContext) as AuthContextType
 
     const navigate = (screen: Extract<keyof AuthRoutes, 'Login' | 'Signup'>) => {
         setIsOnboarded();
-        // navigation.navigate(screen);
     };
     return (
         <>
             <View style={styles.container}>
-                <View style={{ height: 60 }} />
-                <Image
-                    style={{ width: '100%' }}
-                    resizeMode='contain'
-                    source={require('../../assets/images/onboardMain3.png')} />
+                <ScrollView>
 
-                <View style={{ alignItems: 'center', marginTop: '10%', marginHorizontal: 15 }}>
+                    <View style={{ height: 60 }} />
+                    <Image
+                        style={{ width: '100%' }}
+                        resizeMode='contain'
+                        source={require('../../assets/images/onboardMain3.png')} />
 
-                    <Text style={{ fontSize: 20 }} fontWeight='600'>Blog Reader</Text>
-                    <Text fontWeight='500' style={{ textAlign: 'center', fontSize: 15 }}>Get to read the latest news, articles, stories in the financial sector.</Text>
-                    <Button
-                        onPress={() => navigation.navigate('SignUp')}
-                        text='Sign Up' style={{ marginTop: 15 }} />
+                    <View style={{ alignItems: 'center', marginTop: '8%', marginHorizontal: 15 }}>
 
-                    <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <Text style={{ fontSize: 16 }} fontWeight='500'>Have an account already? </Text>
-                        <Text onPress={() => { navigation.navigate('Login') }} style={{ color: pallets.primaryBlue, fontSize: 16 }}>Log in</Text>
+                        <Text style={{ fontSize: 20 }} fontWeight='600'>Blog Reader</Text>
+                        <Text fontWeight='500' style={{ textAlign: 'center', fontSize: 15 }}>Get to read the latest news, articles, stories in the financial sector.</Text>
+                        <Button
+                            onPress={() => navigation.navigate('SignUp')}
+                            text='Sign Up' style={{ marginTop: 15 }} />
+
+                        <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                            <Text style={{ fontSize: 16 }} fontWeight='500'>Have an account already? </Text>
+                            <Text onPress={() => { navigation.navigate('Login') }} style={{ color: pallets.primaryBlue, fontSize: 16 }}>Log in</Text>
+                        </View>
+                        <View>
+                            <Text
+                                style={{ textDecorationLine: 'underline', color: pallets.primaryBlue, marginTop: 5 }}>Continue as a guest</Text>
+                        </View>
                     </View>
-                </View>
+                </ScrollView>
             </View>
         </>
     )

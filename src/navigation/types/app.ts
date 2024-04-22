@@ -6,7 +6,7 @@ export type AppRoutes = {
 };
 export type HomeRoutes = {
   DashboardHome: undefined;
-  BlogDetails: { id: number };
+  BlogDetails: { id: number; image: string };
 };
 
 export type AuthRoutes = {

@@ -1,5 +1,5 @@
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { PageWrapper, Text } from '@/components'
 import BlogItem from './Components/BlogItem'
 import { Ionicons } from '@expo/vector-icons'
@@ -12,11 +12,15 @@ import { getInitials } from '../../utils/formatter';
 const DashboardHome = ({ navigation }: RootNavigationProp<AppRoutes, TabRoutes, 'Home'>) => {
     const { user } = useContext(AuthContext) as AuthContextType
 
-    const { data, isLoading } = useGetBlogs({})
-
+    const { data, isLoading, refetch, isRefetching } = useGetBlogs({})
+    const [searchText, setSearchText] = useState('');
     return (
-        <PageWrapper>
+        <PageWrapper
+            showDownInset={false}>
+
             <View style={{ flexDirection: 'row', margin: 10, alignItems: 'center', justifyContent: 'space-between', marginBottom: 19 }}>
+
+
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <View style={{ backgroundColor: '#0056FD', borderRadius: 100, padding: 10 }}>
                         <Text fontWeight='600' style={{ color: pallets.white }}>{getInitials(user?.name!!)}</Text>
@@ -27,9 +31,16 @@ const DashboardHome = ({ navigation }: RootNavigationProp<AppRoutes, TabRoutes, 
                 <Ionicons name="notifications-outline" size={24} color="black" />
             </View>
 
+
             {isLoading ? <ActivityIndicator color={pallets.primaryBlue} /> :
 
-                <BlogItem item={data?.data} onPress={(val) => navigation.navigate('HomeStack', { screen: 'BlogDetails', params: { id: val } })} />
+
+                <BlogItem
+                    searchText={searchText}
+                    isRefresh={isRefetching}
+                    refetch={refetch}
+                    item={data?.data}
+                    onPress={(val, image) => navigation.navigate('HomeStack', { screen: 'BlogDetails', params: { id: val, image: image } })} />
             }
         </PageWrapper>
     )

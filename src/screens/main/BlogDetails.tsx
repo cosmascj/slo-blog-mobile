@@ -30,6 +30,7 @@ export const BlogDetails = ({ navigation, route }: StackNavigationProps<HomeRout
             handleApiError(err)
         }
     })
+
     return (
         <PageWrapper bgColor='#FAF9F6' safeAreaDownColor='#FAF9F6' safeAreaUpColor='#FAF9F6'>
             <BackHeader showLeftComponent={true} leftComponent={<Feather name="share-2" size={24} color={pallets.primaryBlue} />} />
@@ -42,7 +43,12 @@ export const BlogDetails = ({ navigation, route }: StackNavigationProps<HomeRout
                         </View>
                         <Text style={{ marginVertical: 5 }} fontWeight='600' >{data?.data?.title}</Text>
 
-                        <Image style={styles.image} source={require('../../assets/images/blogImage.png')} />
+                        <Image
+                            resizeMode='contain'
+                            source={data?.data?.media ? { uri: route?.params.image } : require('../../assets/images/blogImage.png')}
+                            style={styles.image}
+                        />
+
                         <Text fontWeight='500'>{data?.data?.body}</Text>
 
                         <View style={styles.postDetails}>
@@ -55,7 +61,6 @@ export const BlogDetails = ({ navigation, route }: StackNavigationProps<HomeRout
                         <CommentView
                             isPostingComment={loadingPostComment}
                             postId={route?.params?.id}
-                            // onPressSend={(val) => mutate({ comment: val })}
                             item={Comment?.data ?? []} />
                     </View>
                 </>
@@ -81,6 +86,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 10
     },
-    image: { width: '100%', borderRadius: 5, marginVertical: 9 },
+    image: { width: '100%', borderRadius: 10, marginVertical: 9, height: 120, },
     comment: { marginHorizontal: 15, marginTop: 15 }
 })
